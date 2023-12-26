@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "61201575676",
+    "project_id": "jamguhtrivia",
+    "storage_bucket": "jamguhtrivia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61201575676:android:51bf0b6df42b8182d9f179",
+        "android_client_info": {
+          "package_name": "com.example.jamguh_triva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61201575676-n623c37v9hmm4g8gvug4vambh6bb1p0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jamguh_triva",
+            "certificate_hash": "cf507a6199e022b0b7b7b61565923893cf0ae3ae"
+          }
+        },
+        {
+          "client_id": "61201575676-o30enihn7fmjrf953j23h0043kk8hkm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa-4AohuQIXz2afuBO6f0WtEI1HtdKixA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61201575676-o30enihn7fmjrf953j23h0043kk8hkm9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "61201575676-god8lm4c5m5rtvrvvpa0mgrhftgf81l5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jamguhTriva"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
