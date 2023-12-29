@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jamguh_triva/pages/gamecontainer.dart';
+import 'package:jamguh_triva/pages/leaderboards.dart';
 
 class login extends StatelessWidget {
   const login({super.key});
@@ -20,7 +21,7 @@ class login extends StatelessWidget {
                   if (snapshot.hasData) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => GameContainer()));
+                          context, MaterialPageRoute(builder: (context) => const Playerleaderboards()));
                     });
                   }
                   return Center(
