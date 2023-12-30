@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  awesome_drawer_bar:
+    dependency: "direct main"
+    description:
+      name: awesome_drawer_bar
+      sha256: "6fddeb0e3e144be6d872a68bd9760e5e15299e561e4aab82895aaf02690bdc9c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   bloc:
     dependency: transitive
     description:
@@ -294,6 +302,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_adaptive_scaffold:
+    dependency: transitive
+    description:
+      name: flutter_adaptive_scaffold
+      sha256: "28ba468c0183f6632cb222298f47f74c6c0888580784757d6a4ceeba00be6154"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -315,6 +331,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_slider_drawer:
+    dependency: "direct main"
+    description:
+      name: flutter_slider_drawer
+      sha256: "7e34f47a6d37c7518791fa1e242492df23e75ccbc600eeda4abfd5641aeea709"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.3"
   flutter_svg:
     dependency: transitive
     description:
@@ -365,6 +389,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
+  google_mobile_ads:
+    dependency: "direct main"
+    description:
+      name: google_mobile_ads
+      sha256: d2ef5ec1e1f31137fc241bdeab3037c31062d387dd221fd884fb1160444c788b
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   google_sign_in:
     dependency: "direct main"
     description:
@@ -746,6 +778,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4-beta"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      sha256: "42393b4492e629aa3a88618530a4a00de8bb46e50e7b3993fedbfdc5352f0dbf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.2"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: b54c89fe14a6d26a2a46e24880da0441cdd2bf1f6d01a5b3e1d39558feb1de0b
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.13.1"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: dbe745ee459a16b6fec296f7565a8ef430d0d681001d8ae521898b9361854943
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: eebfabfa8a115b535b52031b8b26f7a4b58ceceab378bc9db8762b0fb46f7b5d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.10.0"
   win32:
     dependency: transitive
     description:

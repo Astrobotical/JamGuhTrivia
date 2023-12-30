@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jamguh_triva/pages/Homepage.dart';
+import 'package:jamguh_triva/pages/Profileimagechooser.dart';
 import 'package:jamguh_triva/pages/gamecontainer.dart';
 import 'package:jamguh_triva/pages/leaderboards.dart';
 
@@ -21,7 +23,7 @@ class login extends StatelessWidget {
                   if (snapshot.hasData) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => const Playerleaderboards()));
+                          context, MaterialPageRoute(builder: (context) => const HomePage()));
                     });
                   }
                   return Center(
