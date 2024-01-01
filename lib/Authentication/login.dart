@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jamguh_triva/pages/Homepage.dart';
 import 'package:jamguh_triva/pages/Profileimagechooser.dart';
@@ -16,7 +17,11 @@ class login extends StatelessWidget {
     GoogleSignInAccount? CurrentGoogleUser;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3:  true
+      ),
         home:Scaffold(
+          backgroundColor: Colors.green,
             body: StreamBuilder(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (BuildContext context, snapshot) {
@@ -27,10 +32,18 @@ class login extends StatelessWidget {
                     });
                   }
                   return Center(
-                      child: Column(children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Welcome to Jamguh Trivia",style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+                          Gap(30),
                     Container(
                         margin: const EdgeInsets.only(top: 50),
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.yellow),
+                          ),
                             onPressed: () async {
                               final googleUser = await googlesignIn.signIn();
                               if (googleUser == null) return;
@@ -44,7 +57,7 @@ class login extends StatelessWidget {
                               await FirebaseAuth.instance
                                   .signInWithCredential(creds);
                             },
-                            child: Text("Login"))),
+                            child: Text("Play",style: TextStyle(color: Colors.black),))),
                   ]));
                 })));
   }

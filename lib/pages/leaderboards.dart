@@ -23,11 +23,6 @@ class Playerleaderboards extends StatelessWidget {
               ),
               automaticallyImplyLeading: false,
               centerTitle: true,
-              leading: IconButton(
-                icon:
-                    const Icon(Icons.arrow_back, color: Colors.black, size: 25),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
               elevation: 0,
             ),
             body: SingleChildScrollView(child:
@@ -50,7 +45,6 @@ class Playerleaderboards extends StatelessWidget {
                                   Text('${tile.currentPosition}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                   
                               title:Row(children: [ 
-                              Gap(15),
                                   Container(
                                     height: 50,
                                     child:

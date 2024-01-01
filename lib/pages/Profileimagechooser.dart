@@ -16,11 +16,7 @@ class profileimagechooser extends StatelessWidget {
         title: Text("Account Icons",style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold,fontSize: 30),),
         elevation: 0,
         backgroundColor: Colors.blueGrey[600],
-        leading: IconButton(
-                icon:
-                    const Icon(Icons.arrow_back, color: Colors.white, size: 25),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+       automaticallyImplyLeading: false,
       ),
       body:
         BlocBuilder<ProfilestateCubit, ProfilestateState>(
@@ -28,7 +24,10 @@ class profileimagechooser extends StatelessWidget {
       final methodobj = context.read<ProfilestateCubit>();
       if(state is ProfilestateDone)
       {
-        return Align(
+        return 
+        methodobj.isSubscribed == null? Center(child: CircularProgressIndicator()):
+        
+        Align(
           alignment: AlignmentDirectional(0, 0),
           child: Column(mainAxisSize: MainAxisSize.max, children: [
             Row(
@@ -198,7 +197,7 @@ class profileimagechooser extends StatelessWidget {
             ))
           ]));
       }
-      return Align(
+      return  methodobj.isSubscribed == null? CircularProgressIndicator():Align(
           alignment: AlignmentDirectional(0, 0),
           child: Column(mainAxisSize: MainAxisSize.max, children: [
             Row(

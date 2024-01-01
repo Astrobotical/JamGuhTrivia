@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jamguh_triva/Authentication/login.dart';
 import 'package:jamguh_triva/Observer.dart';
+import 'package:jamguh_triva/Statemanagement/cubit/completesignup_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/gamestate_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/leaderboards_manager_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/profilestate_cubit.dart';
@@ -30,8 +31,10 @@ void main() async {
       BlocProvider<LeaderboardsManagerCubit>(
         create: (_)=>LeaderboardsManagerCubit()..getLeaderboard()),
       BlocProvider<ProfilestateCubit>(
-        create: (_)=>ProfilestateCubit()..GetUserIcons())
-
+        create: (_)=>ProfilestateCubit()..GetUserIcons()),
+        BlocProvider<CompletesignupCubit>(
+          create: (_)=>CompletesignupCubit(),
+          )
     ],
     child:login(),
     ),
