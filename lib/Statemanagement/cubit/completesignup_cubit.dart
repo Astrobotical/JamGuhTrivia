@@ -18,12 +18,12 @@ class CompletesignupCubit extends Cubit<CompletesignupState> {
   Future<void> generateProfile(String userid) async {
     Map<String, dynamic> data = {
       'UID': userid,
-      'icons': ['jjyb9xNBwwsrpLtUJJDo'],
+      'icons': ['hVAOPXqfgvndhSMn5Q4E'],
       'issubscribed': false,
       'jamcoins': 0,
       'profileImage':
           'https://firebasestorage.googleapis.com/v0/b/jamguhtrivia.appspot.com/o/defaulticon.jpeg?alt=media&token=e1b68ded-7994-4c97-84d5-3927e970f00e',
-      'selectedicon': 'jjyb9xNBwwsrpLtUJJDo',
+      'selectedicon': 'hVAOPXqfgvndhSMn5Q4E',
       'username': ''
     };
     FirebaseFirestore.instance

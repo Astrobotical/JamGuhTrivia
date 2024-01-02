@@ -8,6 +8,7 @@ class profileimagecontainerwidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.sizeOf(context).width * 0.4,
+      margin: EdgeInsets.only(top:1.43),
       height: 170,
       decoration: BoxDecoration(
         color: Colors.grey[300],
@@ -19,6 +20,7 @@ class profileimagecontainerwidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
               child:

@@ -9,6 +9,7 @@ import 'package:jamguh_triva/Statemanagement/cubit/completesignup_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/gamestate_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/leaderboards_manager_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/profilestate_cubit.dart';
+import 'package:jamguh_triva/Statemanagement/cubit/store_page_cubit.dart';
 import 'package:jamguh_triva/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jamguh_triva/pages/gamecontainer.dart';
@@ -34,7 +35,9 @@ void main() async {
         create: (_)=>ProfilestateCubit()..GetUserIcons()),
         BlocProvider<CompletesignupCubit>(
           create: (_)=>CompletesignupCubit(),
-          )
+        ),
+          BlocProvider<StorePageCubit>(
+            create:(_)=> StorePageCubit()..getitems())
     ],
     child:login(),
     ),

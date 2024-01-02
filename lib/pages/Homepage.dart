@@ -52,9 +52,9 @@ class _HomePageState extends State<HomePage> {
     FirebaseFirestore.instance
         .collection('UserProfiles')
         .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((value) {
-      for (var document in value.docs) {
+        .snapshots()
+        .listen((value) {
+           for (var document in value.docs) {
         setState(() {
           username = document.data()['username'];
           coins = document.data()['jamcoins'];

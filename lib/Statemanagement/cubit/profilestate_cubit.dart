@@ -11,8 +11,19 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<String?> iconID = [];
   List<profileimageModel> Profiles = [];
+  
   bool? isSubscribed;
+  int counter = 0;
+  Future<QuerySnapshot<Map<String, dynamic>>> Icons = FirebaseFirestore.instance.collection("icons").get();
   late String ProfileImage = "";
+  void Increment() {
+    counter += 1;
+  }
+
+  Stream<QuerySnapshot> userIcons = FirebaseFirestore.instance
+      .collection('UserProfiles')
+      .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
   void GetUserIcons() async {
     QuerySnapshot<Map<String, dynamic>> signeduser = await connectionString
         .collection('UserProfiles')
