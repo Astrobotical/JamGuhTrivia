@@ -13,6 +13,7 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
   List<Leaderboardmodel> topthree = [];
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<Leaderboardmodel> rebuilt = [];
+
   Future<List<Leaderboardmodel>> getLeaderboard() async {
     List<int> storedpoints = [];
     QuerySnapshot<Map<dynamic, dynamic>> Icons =
@@ -62,11 +63,16 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
   }
 
   void updatestate() {
-    print(rebuilt);
     emit(LeaderbaordsManagerDone());
-
   }
-
+  void resetstate(){
+    rebuilt.clear();
+    topthree.clear();
+    getLeaderboard();
+    print(rebuilt);
+    emit(LeaderbaordsManagerRefresh());
+    emit(LeaderbaordsManagerDone());
+  }
   void getleaderboard() async {
     List<int> storedpoints = [];
     QuerySnapshot<Map<dynamic, dynamic>> Icons =

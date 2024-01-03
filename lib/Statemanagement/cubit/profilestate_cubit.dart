@@ -70,9 +70,25 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
         .where('UID', isEqualTo: UID)
         .get()
         .then((value) {
-      for (var document in value.docs) {
-        ProfileImage = document.data()['ImageURL'];
-        emit(ProfilestateDone());
+      for (var documenticon in value.docs) {
+        ProfileImage = documenticon.data()['ImageURL'];
+        Map<Object, Object?> data = {'profileImage': ProfileImage};
+        FirebaseFirestore.instance
+            .collection('UserProfiles')
+            .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+            .get()
+            .then((value) {
+          for (var currentdocument in value.docs) {
+            FirebaseFirestore.instance
+                .collection('UserProfiles')
+                .doc(currentdocument.id)
+                .update(data)
+                .then((value) {
+              print('Icon Updated Successfully');
+            });
+            emit(ProfilestateDone());
+          }
+        });
       }
     });
   }

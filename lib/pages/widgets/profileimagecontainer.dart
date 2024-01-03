@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jamguh_triva/Models/profileimageModel.dart';
+import 'package:jamguh_triva/Statemanagement/cubit/leaderboards_manager_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/profilestate_cubit.dart';
 
 class profileimagecontainerwidget extends StatefulWidget {
@@ -18,9 +19,11 @@ class _profileimagecontainerwidgetState
   Widget build(BuildContext context) {
     Color? currentColors = Colors.grey[300];
     final methodobject = context.read<ProfilestateCubit>();
+    final methodleaderboardsobject = context.read<LeaderboardsManagerCubit>();
     return GestureDetector(
         onTapDown: (TapDownDetails) {
           methodobject.setProfileimage(widget.Data.UID);
+          methodleaderboardsobject.resetstate();
           setState(() {
             print('This was clicked down');
             currentColors = Colors.blueAccent[800];
