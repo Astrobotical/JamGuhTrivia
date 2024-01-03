@@ -59,9 +59,12 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
   }
 
   void Reset() {
+    iconID.clear();
     Profiles.clear();
     Profiles = [];
-    //  GetUserIcons();
+    emit(ProfilestateRefresh());
+    GetUserIcons();
+    emit(IconContainerRefresh());
   }
 
   void setProfileimage(String UID) async {

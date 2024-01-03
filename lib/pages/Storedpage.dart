@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:jamguh_triva/Models/moneyModel.dart';
 import 'package:jamguh_triva/Models/productsModel.dart';
+import 'package:jamguh_triva/Statemanagement/cubit/profilestate_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/store_page_cubit.dart';
 
 class StorePage extends StatelessWidget {
@@ -49,9 +50,7 @@ class StorePage extends StatelessWidget {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
-                      onPressed: () {
-                
-                      },
+                      onPressed: () {},
                       child: BlocBuilder<StorePageCubit, StorePageState>(
                           builder: (context, state) {
                         if (state is StorePageSubscriptionSuccess) {
@@ -92,20 +91,20 @@ class StorePage extends StatelessWidget {
                                 ),
                               )
                             : InkWell(
-                                  onTap: () {
-                                    currentContext.purchaseGold(2000);
-                                    _purchaseSubscription(context);
-                                    currentContext.Subscribe();
-                                  },
-                                  child: Text(
-                                    'Purchase Pass',
-                                    style: const TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ));
+                                onTap: () {
+                                  currentContext.purchaseGold(2000);
+                                  _purchaseSubscription(context);
+                                  currentContext.Subscribe();
+                                },
+                                child: Text(
+                                  'Purchase Pass',
+                                  style: const TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ));
                       }),
                     )))
           ],
@@ -120,7 +119,12 @@ class StorePage extends StatelessWidget {
       ),
       SizedBox(
           height: MediaQuery.sizeOf(context).height / 2,
-          child: FutureBuilder<List<productsModel>>(
+          child: 
+          BlocBuilder<StorePageCubit, StorePageState>(
+            builder: (context,state){
+              if(state is IconRefreshed)
+              {
+                return FutureBuilder<List<productsModel>>(
             future: currentContext.getitems(),
             builder: (context, snapped) {
               if (snapped.connectionState == ConnectionState.waiting) {
@@ -142,7 +146,32 @@ class StorePage extends StatelessWidget {
                     return _buildProductCard(item, context);
                   });
             },
-          )),
+          );
+              }
+              return 
+          FutureBuilder<List<productsModel>>(
+            future: currentContext.getitems(),
+            builder: (context, snapped) {
+              if (snapped.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapped.hasError) {
+                return Text('Error found - ${snapped.error}');
+              }
+              return ListView.builder(
+                  padding: EdgeInsets.all(16.0),
+                  shrinkWrap: true,
+                  itemCount: snapped.data!.length,
+                  itemBuilder: (context, index) {
+                    productsModel item = productsModel(
+                        Name: snapped.data![index].Name,
+                        ImageURL: snapped.data![index].ImageURL,
+                        Cost: snapped.data![index].Cost,
+                        UID: snapped.data![index].UID,
+                        haspurchased: snapped.data![index].haspurchased);
+                    return _buildProductCard(item, context);
+                  });
+            },
+          );})),
       Container(
         margin: EdgeInsets.all(15),
         child: Text(
@@ -179,6 +208,7 @@ class StorePage extends StatelessWidget {
 
   Widget _buildProductCard(productsModel Data, BuildContext context) {
     var currentContext = context.read<StorePageCubit>();
+    var profileContext = context.read<ProfilestateCubit>();
     return Card(
       elevation: 3.0,
       child: ListTile(
@@ -202,6 +232,7 @@ class StorePage extends StatelessWidget {
               )
             : ElevatedButton(
                 onPressed: () {
+                  profileContext.Reset();
                   currentContext.purchase(Data.UID);
                   _purchaseProduct(context, Data.Name, Data.Cost);
                 },

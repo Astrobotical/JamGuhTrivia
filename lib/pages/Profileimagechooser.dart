@@ -196,6 +196,40 @@ class profileimagechooser extends StatelessWidget {
                                                               .down,
                                                       clipBehavior: Clip.none,
                                                       children: [
+                                                        BlocBuilder<ProfilestateCubit,ProfilestateState>(
+                                                          builder: (context,state){
+                                                            if(state is IconContainerRefresh)
+                                                            {
+                                                              return SizedBox(
+                                                            height: MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .height,
+                                                            child: SizedBox(
+                                                              height: MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .height,
+                                                              child: GridView
+                                                                  .builder(
+                                                                      itemCount: methodobj
+                                                                          .Profiles
+                                                                          .length,
+                                                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                          crossAxisCount:
+                                                                              2,
+                                                                          crossAxisSpacing:
+                                                                              10),
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return profileimagecontainerwidget(
+                                                                            Data:
+                                                                                methodobj.Profiles[index]);
+                                                                      }),
+                                                            ));
+                                                            }
+                                                          return 
                                                         SizedBox(
                                                             height: MediaQuery
                                                                     .sizeOf(
@@ -223,8 +257,8 @@ class profileimagechooser extends StatelessWidget {
                                                                             Data:
                                                                                 methodobj.Profiles[index]);
                                                                       }),
-                                                            ))
-                                                      ])),
+                                                            ));
+              })])),
                                             ),
                                           ]),
                                     )
@@ -411,18 +445,69 @@ class profileimagechooser extends StatelessWidget {
                                                                 clipBehavior:
                                                                     Clip.none,
                                                                 children: [
-                                                                  SizedBox(
-                                                                    height: MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .height,
-                                                                    child: GridView.builder(
-                                                                        itemCount: methodobj.Profiles.length,
-                                                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 10),
-                                                                        itemBuilder: (context, index) {
-                                                                          return profileimagecontainerwidget(
-                                                                              Data: methodobj.Profiles[index]);
-                                                                        }),
-                                                                  )
+                                                                 BlocBuilder<ProfilestateCubit,ProfilestateState>(
+                                                          builder: (context,state){
+                                                            if(state is IconContainerRefresh)
+                                                            {
+                                                              return SizedBox(
+                                                            height: MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .height,
+                                                            child: SizedBox(
+                                                              height: MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .height,
+                                                              child: GridView
+                                                                  .builder(
+                                                                      itemCount: methodobj
+                                                                          .Profiles
+                                                                          .length,
+                                                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                          crossAxisCount:
+                                                                              2,
+                                                                          crossAxisSpacing:
+                                                                              10),
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return profileimagecontainerwidget(
+                                                                            Data:
+                                                                                methodobj.Profiles[index]);
+                                                                      }),
+                                                            ));
+                                                            }
+                                                          return 
+                                                        SizedBox(
+                                                            height: MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .height,
+                                                            child: SizedBox(
+                                                              height: MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .height,
+                                                              child: GridView
+                                                                  .builder(
+                                                                      itemCount: methodobj
+                                                                          .Profiles
+                                                                          .length,
+                                                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                          crossAxisCount:
+                                                                              2,
+                                                                          crossAxisSpacing:
+                                                                              10),
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return profileimagecontainerwidget(
+                                                                            Data:
+                                                                                methodobj.Profiles[index]);
+                                                                      }),
+                                                            ));
+              })
                                                                 ])))
                                                   ]))
                                         ])))))

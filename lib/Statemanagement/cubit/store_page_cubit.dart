@@ -123,6 +123,7 @@ class StorePageCubit extends Cubit<StorePageState> {
             .update(data)
             .then((value) {
           print('Updated Successfully');
+          emit(IconRefreshed());
           // emit(CompletesignupSuccess());
         }).catchError((error) {
           print('Error while updating');

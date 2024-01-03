@@ -4,5 +4,9 @@ part of 'profilestate_cubit.dart';
 sealed class ProfilestateState {}
 
 final class ProfilestateInitial extends ProfilestateState {}
-final class ProfilestateDone extends ProfilestateState{}
-final class ProfilestateRefresh  extends ProfilestateState{}
+
+final class ProfilestateDone extends ProfilestateState {}
+
+final class ProfilestateRefresh extends ProfilestateState {}
+
+final class IconContainerRefresh extends ProfilestateState {}

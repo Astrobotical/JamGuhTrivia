@@ -8,3 +8,4 @@ final class StorePageInitial extends StorePageState {}
 final class StorePageSubscriptionSuccess extends StorePageState {}
 
 final class StorePageIconPurchased extends StorePageState {}
+final class IconRefreshed extends StorePageState{}
