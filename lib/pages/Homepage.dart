@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/completesignup_cubit.dart';
 import 'package:jamguh_triva/pages/Home.dart';
+import 'package:jamguh_triva/pages/Home2.dart';
 import 'package:jamguh_triva/pages/Profileimagechooser.dart';
 import 'package:jamguh_triva/pages/Storedpage.dart';
 import 'package:jamguh_triva/pages/leaderboards.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     {'title': 'Logout', 'icon': Icons.exit_to_app, 'place': 4},
   ];
   List<Widget> currentView = [
-    MyHomePage(),
+    MyHomePageTwo(),
     Playerleaderboards(),
     profileimagechooser(),
     StorePage(),
