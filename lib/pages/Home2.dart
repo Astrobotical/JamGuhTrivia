@@ -15,9 +15,8 @@ class MyHomePageTwo extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-                image: AssetImage(
-                    "lib/assets/images/jamaica_flag_brushStroke.png")),
+             Image.asset(
+                    "assets/images/jamaica_flag_brushStroke.png"),
             const Text("Select Difficulty"),
             ListView.builder(
               shrinkWrap: true,
