@@ -29,6 +29,7 @@ class profileimagechooser extends StatelessWidget {
             body: BlocBuilder<ProfilestateCubit, ProfilestateState>(
                 builder: (context, state) {
               final methodobj = context.read<ProfilestateCubit>();
+            //  methodobj.Reset();
               if (state is ProfilestateDone) {
                 return methodobj.isSubscribed == null
                     ? Center(child: CircularProgressIndicator())
@@ -200,63 +201,29 @@ class profileimagechooser extends StatelessWidget {
                                                                     .sizeOf(
                                                                         context)
                                                                 .height,
-                                                            child: StreamBuilder<
-                                                                    QuerySnapshot>(
-                                                                stream: methodobj
-                                                                    .userIcons,
-                                                                builder: ((context,
-                                                                    AsyncSnapshot<
-                                                                            QuerySnapshot>
-                                                                        snapshot) {
-                                                                  if (snapshot
-                                                                      .hasError) {
-                                                                    return const Text(
-                                                                        'Something went wrong');
-                                                                  }
-                                                                  if (snapshot
-                                                                          .connectionState ==
-                                                                      ConnectionState
-                                                                          .waiting) {
-                                                                    return const Text(
-                                                                        "Loading");
-                                                                  }
-                                                                  return GridView(
+                                                            child: SizedBox(
+                                                              height: MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .height,
+                                                              child: GridView
+                                                                  .builder(
+                                                                      itemCount: methodobj
+                                                                          .Profiles
+                                                                          .length,
                                                                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                                                           crossAxisCount:
                                                                               2,
                                                                           crossAxisSpacing:
                                                                               10),
-                                                                      children: [
-                                                                        ...snapshot
-                                                                            .data!
-                                                                            .docs
-                                                                            .map((DocumentSnapshot
-                                                                                document) {
-                                                                          Map<String, dynamic>
-                                                                              data =
-                                                                              document.data()! as Map<String, dynamic>;
-                                                                          List<dynamic>
-                                                                              icon =
-                                                                              data['icons'];
-                                                                          FirebaseFirestore
-                                                                              .instance
-                                                                              .collection("icons")
-                                                                              .get()
-                                                                              .then((value) {
-                                                                            for (var documenticons
-                                                                                in value.docs) {
-                                                                              for (int counter = 0; counter < icon.length; counter++) {
-                                                                                if (icon[counter] == documenticons.id) {
-                                                                                  profileimageModel icon = profileimageModel(UID: documenticons.data()['UID'], Name: documenticons.data()['Name'], ImageLink: documenticons.data()['ImageURL']);
-                                                                                  return profileimagecontainerwidget(Data: icon);
-                                                                                }
-                                                                              }
-                                                                            }
-                                                                          });
-                                                                            return methodobj.Profiles.map((storedicons) => profileimagecontainerwidget(Data: storedicons))as Widget;
-                                                                        })
-                                                                      ]);
-                                                                })))
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return profileimagecontainerwidget(
+                                                                            Data:
+                                                                                methodobj.Profiles[index]);
+                                                                      }),
+                                                            ))
                                                       ])),
                                             ),
                                           ]),
@@ -371,140 +338,94 @@ class profileimagechooser extends StatelessWidget {
                         ),
                         Expanded(
                             child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 400,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 3,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0, -1),
-                                )
-                              ],
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(50),
-                                topRight: Radius.circular(50),
-                              ),
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(16),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(left: 20),
-                                            child: Text(
-                                              'My Profile Icons',
-                                              style: TextStyle(fontSize: 25),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 16, 0, 0),
-                                                child: Wrap(
-                                                    spacing: 16,
-                                                    runSpacing: 16,
-                                                    alignment:
-                                                        WrapAlignment.start,
-                                                    crossAxisAlignment:
-                                                        WrapCrossAlignment
-                                                            .start,
-                                                    direction: Axis.horizontal,
-                                                    runAlignment:
-                                                        WrapAlignment.start,
-                                                    verticalDirection:
-                                                        VerticalDirection.down,
-                                                    clipBehavior: Clip.none,
-                                                    children: [
-                                                      SizedBox(
-                                                          height:
-                                                              MediaQuery.sizeOf(
-                                                                      context)
-                                                                  .height,
-                                                          child: StreamBuilder<
-                                                                  QuerySnapshot>(
-                                                              stream: methodobj
-                                                                  .userIcons,
-                                                              builder: ((context,
-                                                                  AsyncSnapshot<
-                                                                          QuerySnapshot>
-                                                                      snapshot) {
-                                                                if (snapshot
-                                                                    .hasError) {
-                                                                  return const Text(
-                                                                      'Something went wrong');
-                                                                }
-                                                                if (snapshot
-                                                                        .connectionState ==
-                                                                    ConnectionState
-                                                                        .waiting) {
-                                                                  return const Text(
-                                                                      "Loading");
-                                                                }
-                                                                return GridView(
-                                                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                        crossAxisCount:
-                                                                            2,
-                                                                        crossAxisSpacing:
-                                                                            10),
-                                                                    children: <Widget>[
-                                                                      ...snapshot
-                                                                          .data!
-                                                                          .docs
-                                                                          .map((DocumentSnapshot
-                                                                              document) {
-                                                                        Map<String,
-                                                                                dynamic>
-                                                                            data =
-                                                                            document.data()!
-                                                                                as Map<String, dynamic>;
-                                                                        List<dynamic>
-                                                                            icon =
-                                                                            data['icons'];
-                                                                        FirebaseFirestore
-                                                                            .instance
-                                                                            .collection("icons")
-                                                                            .get()
-                                                                            .then((value) {
-                                                                          for (var documenticons
-                                                                              in value.docs) {
-                                                                            for (int counter = 0;
-                                                                                counter < icon.length;
-                                                                                counter++) {
-                                                                              if (icon[counter] == documenticons.id) {
-                                                                                profileimageModel icon = profileimageModel(UID: documenticons.data()['UID'], Name: documenticons.data()['Name'], ImageLink: documenticons.data()['ImageURL']);
-                                                                                methodobj.Profiles.add(icon);
-                                                                                //profileimagecontainerwidget(Data: icon);
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                        });
-                                                                        return methodobj.Profiles.map((storedicons) => profileimagecontainerwidget(Data: storedicons)) as Widget;
-                                                                      })
-                                                                    ]);
-                                                              })))
-                                                    ])),
-                                          ),
-                                        ]),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ))
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
+                                child: Container(
+                                    width: double.infinity,
+                                    height: 400,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 3,
+                                          color: Color(0x33000000),
+                                          offset: Offset(0, -1),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(50),
+                                        topRight: Radius.circular(50),
+                                      ),
+                                    ),
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                          Padding(
+                                              padding: EdgeInsets.all(16),
+                                              child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Text(
+                                                        'My Profile Icons',
+                                                        style: TextStyle(
+                                                            fontSize: 25),
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional.fromSTEB(
+                                                                    0,
+                                                                    16,
+                                                                    0,
+                                                                    0),
+                                                            child: Wrap(
+                                                                spacing: 16,
+                                                                runSpacing: 16,
+                                                                alignment:
+                                                                    WrapAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    WrapCrossAlignment
+                                                                        .start,
+                                                                direction: Axis
+                                                                    .horizontal,
+                                                                runAlignment:
+                                                                    WrapAlignment
+                                                                        .start,
+                                                                verticalDirection:
+                                                                    VerticalDirection
+                                                                        .down,
+                                                                clipBehavior:
+                                                                    Clip.none,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: MediaQuery.sizeOf(
+                                                                            context)
+                                                                        .height,
+                                                                    child: GridView.builder(
+                                                                        itemCount: methodobj.Profiles.length,
+                                                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 10),
+                                                                        itemBuilder: (context, index) {
+                                                                          return profileimagecontainerwidget(
+                                                                              Data: methodobj.Profiles[index]);
+                                                                        }),
+                                                                  )
+                                                                ])))
+                                                  ]))
+                                        ])))))
                       ]));
             })));
   }
