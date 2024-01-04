@@ -9,6 +9,7 @@ import 'package:jamguh_triva/Statemanagement/cubit/completesignup_cubit.dart';
 import 'package:jamguh_triva/pages/Home.dart';
 import 'package:jamguh_triva/pages/Profileimagechooser.dart';
 import 'package:jamguh_triva/pages/Storedpage.dart';
+import 'package:jamguh_triva/pages/gamecontainer.dart';
 import 'package:jamguh_triva/pages/leaderboards.dart';
 import 'package:jamguh_triva/pages/signout.dart';
 import 'package:jamguh_triva/pages/usernamecollector.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     {'title': 'Logout', 'icon': Icons.exit_to_app, 'place': 4},
   ];
   List<Widget> currentView = [
-    MyHomePage(),
+    GameContainer(),
     Playerleaderboards(),
     profileimagechooser(),
     StorePage(),

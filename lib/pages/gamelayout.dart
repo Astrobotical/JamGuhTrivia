@@ -35,13 +35,18 @@ class _gamelayoutState extends State<gamelayout> {
           child: Image.network(
             widget.Data.Imageurl,
             width: MediaQuery.sizeOf(context).width,
+            height:200,
           ),
         ),
         Gap(30),
+        FittedBox(
+          fit: BoxFit.fitWidth,
+        child:
         Text(
           widget.Data.Question,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
+    ),
         BlocBuilder<GamestateCubit, GamestateState>(builder: (context, state) {
           if (state is GamestateRadioChanged) {
             return SizedBox(
@@ -73,9 +78,35 @@ class _gamelayoutState extends State<gamelayout> {
                           statefulcontext.setRadio(selectedvalue);
                         });
                   }));
-        })
-      ],
-    );
+        }),
+        Container(
+    width: double.infinity,
+    child:
+        Stack(
+    children:[
+      Align(
+        alignment: Alignment.bottomCenter,
+        child:Text('${statefulcontext.Lister}/${statefulcontext.Questions.length}',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)
+      ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child:
+          InkWell(
+            onTap: (){
+              statefulcontext.pageSkipper();
+            },
+            child:
+          Icon(
+            Icons.arrow_circle_right_outlined,
+            size: 80,
+            weight: 16,
+          ),
+        )
+        )
+        ]
+    ),
+        ),
+    ]);
   }
 
   _showToast(int index) {
