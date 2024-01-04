@@ -37,13 +37,12 @@ class Playerleaderboards extends StatelessWidget {
                           itemCount: methodobj.rebuilt.length,
                           itemBuilder: (context, index) {
                             Leaderboardmodel tile = methodobj.rebuilt[index];
+                            methodobj.counting();
                             return 
                             SizedBox(
                               height: 140,
                               child:
                             ListTile(
-                              leading: 
-                                  Text('${tile.currentPosition}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                   
                               title:Row(children: [ 
                                   Container(
@@ -73,10 +72,10 @@ class Playerleaderboards extends StatelessWidget {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             Leaderboardmodel tile = snapshot.data![index];
+                            methodobj.counting();
                             return ListTile(
                               leading: Row(
                                 children: [
-                                  Text('${tile.currentPosition}'),
                                   Gap(15),
                                   Container(
                                     height: 50,
@@ -91,28 +90,6 @@ class Playerleaderboards extends StatelessWidget {
                             );
                           });
                     }): CircularProgressIndicator();
-                /*
-                Column(children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 40, left: 25),
-                    padding: EdgeInsets.all(25),
-                    child: Expanded(
-                        child: GridView.count(
-                      shrinkWrap: true,
-                      crossAxisCount: 3,
-                      children: [
-                        ...methodobj.topthree.map((e) {
-                          if (methodobj.topthree.length == 1) {
-                            return Topthree(data: e);
-                          } else {
-                            return Topthree(data: e);
-                          }
-                        }),
-                      ],
-                    )),
-                  )
-                ]);
-                */
               },
             ))));
   }

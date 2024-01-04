@@ -13,7 +13,7 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
   List<Leaderboardmodel> topthree = [];
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<Leaderboardmodel> rebuilt = [];
-  int count = 0;
+  int count = 1;
   Future<List<Leaderboardmodel>> getLeaderboard() async {
     List<int> storedpoints = [];
     QuerySnapshot<Map<dynamic, dynamic>> profile =
@@ -60,7 +60,10 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
     updatestate();
     return rebuilt;
   }
-
+  void counting()
+  {
+    count +1;
+  }
   void updatestate() {
     emit(LeaderbaordsManagerDone());
   }
