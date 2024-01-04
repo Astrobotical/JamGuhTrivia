@@ -28,10 +28,13 @@ class MyHomePageTwo extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ListView.separated(
+            
+             Image.asset(
+                    "assets/images/jamaica_flag_brushStroke.png"),
+            const Text("Select Difficulty"),
+            ListView.builder(
               shrinkWrap: true,
               itemCount: 3,
-              separatorBuilder: (context, index) => const Divider(color: Colors.grey),
               itemBuilder: (context, index) {
                 List<Color> colorlist = [
                   Colors.black,

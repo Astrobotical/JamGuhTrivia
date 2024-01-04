@@ -44,7 +44,7 @@ class login extends StatelessWidget {
                           children: [
                         const Image(
                             image: AssetImage(
-                                "lib/assets/images/jamaica_flag_brushStroke.png")),
+                                "assets/images/jamaica_flag_brushStroke.png")),
                         const Text(
                           "Welcome to Jamguh Trivia",
                           style: TextStyle(
