@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jamguh_triva/Authentication/login.dart';
 import 'package:jamguh_triva/Models/QuestionsModel.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/gamestate_cubit.dart';
+import 'package:jamguh_triva/pages/Gameover.dart';
 import 'package:jamguh_triva/pages/gamelayout.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 class GameContainer extends StatefulWidget {
@@ -34,6 +35,9 @@ class _GameContainerState extends State<GameContainer> {
                 children: [
                   BlocBuilder<GamestateCubit,GamestateState>(
                       builder:(context,state) {
+                        if(state is GameOver){
+                          return GameOverPage();
+                        }
                         if (state is NextPage) {
                           return SizedBox(
                               height: MediaQuery

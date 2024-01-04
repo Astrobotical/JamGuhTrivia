@@ -86,7 +86,7 @@ class _gamelayoutState extends State<gamelayout> {
     children:[
       Align(
         alignment: Alignment.bottomCenter,
-        child:Text('${statefulcontext.Lister}/${statefulcontext.Questions.length}',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)
+        child:Text('${statefulcontext.Lister}/${statefulcontext.Questions.length-1}',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)
       ),
         Align(
           alignment: Alignment.bottomRight,

@@ -13,19 +13,18 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
   List<Leaderboardmodel> topthree = [];
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<Leaderboardmodel> rebuilt = [];
-
+  int count = 0;
   Future<List<Leaderboardmodel>> getLeaderboard() async {
     List<int> storedpoints = [];
-    QuerySnapshot<Map<dynamic, dynamic>> Icons =
-        await connectionString.collection("icons").get();
     QuerySnapshot<Map<dynamic, dynamic>> profile =
         await connectionString.collection("UserProfiles").get();
     await connectionString.collection("Leaderboard").get().then((value) {
       for (var docSnapshot in value.docs) {
         for (var profileSnapshot in profile.docs) {
+          int position = 0;
           if (profileSnapshot.data()['UID'] == docSnapshot.data()['UID']) {
             Leaderboardmodel User = Leaderboardmodel(
-                currentPosition: 1,
+                currentPosition: ++position,
                 profileImage: profileSnapshot.data()['profileImage'],
                 points: docSnapshot.data()['Points'],
                 username: profileSnapshot.data()['username']);
@@ -34,27 +33,27 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
           }
         }
       }
-
+     // print(topthree);
       int LargestPoints = 0;
       storedpoints.sort((b, a) => a.compareTo(b));
-      int count = 0;
       for (Leaderboardmodel storeduser in topthree) {
+        print(storedpoints);/*
         if (storeduser.points == storedpoints[count]) {
+          //print(storedpoints[count]);
           if (count == 0) {
-            storeduser.currentPosition = 1;
-            LargestPoints = storedpoints[count];
+           //storeduser.currentPosition = 1;
             count++;
           } else {
-            if (storedpoints[count] <= LargestPoints &&
-                storedpoints[count] > LargestPoints) {
               LargestPoints = storedpoints[count];
               storeduser.currentPosition = count;
               count++;
-            }
+
           }
         }
+*/
         rebuilt.add(storeduser);
       }
+     // print(rebuilt);
     });
 
     //print(rebuilt);

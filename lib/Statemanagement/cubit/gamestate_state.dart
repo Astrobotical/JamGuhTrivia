@@ -11,4 +11,4 @@ final class GamestateRadioChanged extends GamestateState {}
 
 final class GamestateRefreshed extends GamestateState {}
 final class NextPage extends GamestateState{}
-
+final class GameOver extends GamestateState{}

@@ -165,6 +165,9 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => const usernameCollector()));
                 });
               }
+              if(state is GameDoneLeaderboardRedirect){
+                return Playerleaderboards();
+              }
               return currentView[index];
             })));
   }

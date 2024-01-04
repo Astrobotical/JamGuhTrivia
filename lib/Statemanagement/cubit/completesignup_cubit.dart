@@ -70,4 +70,7 @@ class CompletesignupCubit extends Cubit<CompletesignupState> {
     }
     return tobereturned;
   }
+  void redirectaftergame(){
+    emit(GameDoneLeaderboardRedirect());
+  }
 }

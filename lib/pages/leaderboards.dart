@@ -33,6 +33,7 @@ class Playerleaderboards extends StatelessWidget {
                 {
                   return  ListView.builder(
                     shrinkWrap: true,
+                          reverse: true,
                           itemCount: methodobj.rebuilt.length,
                           itemBuilder: (context, index) {
                             Leaderboardmodel tile = methodobj.rebuilt[index];
