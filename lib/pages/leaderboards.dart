@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:jamguh_triva/Models/leaderboardModel.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/leaderboards_manager_cubit.dart';
+import 'package:jamguh_triva/pages/widgets/GradientText.dart';
 import 'package:jamguh_triva/pages/widgets/top3.dart';
 
 class Playerleaderboards extends StatelessWidget {
@@ -33,16 +34,16 @@ class Playerleaderboards extends StatelessWidget {
                 {
                   return  ListView.builder(
                     shrinkWrap: true,
-                          reverse: true,
                           itemCount: methodobj.rebuilt.length,
                           itemBuilder: (context, index) {
                             Leaderboardmodel tile = methodobj.rebuilt[index];
-                            methodobj.counting();
                             return 
                             SizedBox(
                               height: 140,
                               child:
                             ListTile(
+                              leading:
+                                  Text('${tile.currentPosition}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                   
                               title:Row(children: [ 
                                   Container(
@@ -51,8 +52,17 @@ class Playerleaderboards extends StatelessWidget {
                                         Image.network('${tile.profileImage}'),
                                   ),
                                    Gap(15),
-                              Text('${tile.username}'),
-                             
+                              tile.isSubscribed ?
+                              GradientText(
+                                '${tile.username}'
+                                ,gradient: LinearGradient(colors: [
+                                Colors.red,
+                                Colors.blue,
+                              ]),
+                              style: TextStyle(fontSize: 19 ),
+                              )
+                              :
+                              Text('${tile.username}',style: TextStyle(fontSize: 19 ),),
                               ]),
                               trailing: Text('${tile.points} Points',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                             ));
@@ -71,11 +81,12 @@ class Playerleaderboards extends StatelessWidget {
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            Leaderboardmodel tile = snapshot.data![index];
-                            methodobj.counting();
+                            Leaderboardmodel tile = methodobj.rebuilt[index];
+                            //methodobj.counting();
                             return ListTile(
                               leading: Row(
                                 children: [
+                                  Text('${methodobj.count}'),
                                   Gap(15),
                                   Container(
                                     height: 50,
@@ -90,6 +101,28 @@ class Playerleaderboards extends StatelessWidget {
                             );
                           });
                     }): CircularProgressIndicator();
+                /*
+                Column(children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 40, left: 25),
+                    padding: EdgeInsets.all(25),
+                    child: Expanded(
+                        child: GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 3,
+                      children: [
+                        ...methodobj.topthree.map((e) {
+                          if (methodobj.topthree.length == 1) {
+                            return Topthree(data: e);
+                          } else {
+                            return Topthree(data: e);
+                          }
+                        }),
+                      ],
+                    )),
+                  )
+                ]);
+                */
               },
             ))));
   }

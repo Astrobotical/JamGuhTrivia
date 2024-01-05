@@ -52,7 +52,7 @@ class profileimagechooser extends StatelessWidget {
                                       child: FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                            '${methodobj.isSubscribed != null ? "Subscribed" : "Free"}',
+                                            '${methodobj.isSubscribed! ? "Subscribed" : "Free"}',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: 25,
@@ -289,7 +289,7 @@ class profileimagechooser extends StatelessWidget {
                                     child: FittedBox(
                                       fit: BoxFit.fitWidth,
                                       child: Text(
-                                          '${methodobj.isSubscribed != null ? "Subscribed" : "Free"}',
+                                          '${methodobj.isSubscribed! ? "Subscribed" : "Free"}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 25,

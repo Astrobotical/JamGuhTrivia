@@ -47,6 +47,7 @@ dependencies:
   profile_photo: ^1.0.3
   firebase_database: ^10.3.8
   logging: ^1.2.0
+  google_mobile_ads: ^4.0.0
 
 dev_dependencies:
   flutter_test:
