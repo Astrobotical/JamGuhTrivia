@@ -11,10 +11,11 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<String?> iconID = [];
   List<profileimageModel> Profiles = [];
-  
+
   bool? isSubscribed;
   int counter = 0;
-  Future<QuerySnapshot<Map<String, dynamic>>> Icons = FirebaseFirestore.instance.collection("icons").get();
+  Future<QuerySnapshot<Map<String, dynamic>>> Icons =
+      FirebaseFirestore.instance.collection("icons").get();
   late String ProfileImage = "";
   void Increment() {
     counter += 1;
@@ -25,6 +26,8 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
       .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .snapshots();
   void GetUserIcons() async {
+    Profiles.clear();
+    Profiles = [];
     QuerySnapshot<Map<String, dynamic>> signeduser = await connectionString
         .collection('UserProfiles')
         .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -41,7 +44,6 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
     for (var icons in Icons.docs) {
       for (int counter = 0; counter < iconID.length; counter++) {
         if (iconID[counter] == icons.id) {
-          // connectionString.collection('icons').where()
           profileimageModel icon = profileimageModel(
               UID: icons.data()['UID'],
               Name: icons.data()['Name'],
@@ -54,5 +56,43 @@ class ProfilestateCubit extends Cubit<ProfilestateState> {
     emit(ProfilestateDone());
     emit(ProfilestateRefresh());
     emit(ProfilestateDone());
+  }
+
+  void Reset() {
+    iconID.clear();
+    Profiles.clear();
+    Profiles = [];
+    emit(ProfilestateRefresh());
+    GetUserIcons();
+    emit(IconContainerRefresh());
+  }
+
+  void setProfileimage(String UID) async {
+    FirebaseFirestore.instance
+        .collection('icons')
+        .where('UID', isEqualTo: UID)
+        .get()
+        .then((value) {
+      for (var documenticon in value.docs) {
+        ProfileImage = documenticon.data()['ImageURL'];
+        Map<Object, Object?> data = {'profileImage': ProfileImage};
+        FirebaseFirestore.instance
+            .collection('UserProfiles')
+            .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+            .get()
+            .then((value) {
+          for (var currentdocument in value.docs) {
+            FirebaseFirestore.instance
+                .collection('UserProfiles')
+                .doc(currentdocument.id)
+                .update(data)
+                .then((value) {
+              print('Icon Updated Successfully');
+            });
+            emit(ProfilestateDone());
+          }
+        });
+      }
+    });
   }
 }

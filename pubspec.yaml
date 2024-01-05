@@ -49,6 +49,7 @@ dependencies:
   logging: ^1.2.0
   permission_handler: ^11.1.0
   bloc: ^8.1.2
+  google_mobile_ads: ^4.0.0
 
 dev_dependencies:
   flutter_test:

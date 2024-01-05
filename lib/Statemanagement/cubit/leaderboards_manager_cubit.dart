@@ -13,102 +13,51 @@ class LeaderboardsManagerCubit extends Cubit<LeaderboardsManagerState> {
   List<Leaderboardmodel> topthree = [];
   FirebaseFirestore connectionString = FirebaseFirestore.instance;
   List<Leaderboardmodel> rebuilt = [];
+  int count = 1;
+
   Future<List<Leaderboardmodel>> getLeaderboard() async {
     List<int> storedpoints = [];
-    QuerySnapshot<Map<dynamic, dynamic>> Icons =
-        await connectionString.collection("icons").get();
+    int position = 0;
     QuerySnapshot<Map<dynamic, dynamic>> profile =
-        await connectionString.collection("UserProfiles").get();
-    await connectionString.collection("Leaderboard").get().then((value) {
+    await connectionString.collection("UserProfiles").get();
+    await connectionString.collection("Leaderboard")
+        .orderBy('Points', descending: true)
+        .get().then((value) {
       for (var docSnapshot in value.docs) {
         for (var profileSnapshot in profile.docs) {
           if (profileSnapshot.data()['UID'] == docSnapshot.data()['UID']) {
             Leaderboardmodel User = Leaderboardmodel(
-                currentPosition: 1,
-                profileImage: profileSnapshot.data()['profileImage'],
-                points: docSnapshot.data()['Points'],
-                username: profileSnapshot.data()['username']);
+              currentPosition: ++position,
+              profileImage: profileSnapshot.data()['profileImage'],
+              points: docSnapshot.data()['Points'],
+              username: profileSnapshot.data()['username'],
+              isSubscribed: profileSnapshot.data()['issubscribed'],
+            );
             topthree.add(User);
             storedpoints.add(docSnapshot.data()['Points']);
           }
         }
       }
-
-      int LargestPoints = 0;
-      storedpoints.sort((b, a) => a.compareTo(b));
-      int count = 0;
-      for (Leaderboardmodel storeduser in topthree) {
-        if (storeduser.points == storedpoints[count]) {
-          if (count == 0) {
-            storeduser.currentPosition = 1;
-            LargestPoints = storedpoints[count];
-            count++;
-          } else {
-            if (storedpoints[count] <= LargestPoints &&
-                storedpoints[count] > LargestPoints) {
-              LargestPoints = storedpoints[count];
-              storeduser.currentPosition = count;
-              count++;
-            }
-          }
-        }
-        rebuilt.add(storeduser);
-      }
     });
-
-    //print(rebuilt);
+    rebuilt = topthree;
     updatestate();
     return rebuilt;
   }
 
-  void updatestate() {
-    print(rebuilt);
-    emit(LeaderbaordsManagerDone());
-
+  void counting() {
+    count + 1;
   }
 
-  void getleaderboard() async {
-    List<int> storedpoints = [];
-    QuerySnapshot<Map<dynamic, dynamic>> Icons =
-        await connectionString.collection("icons").get();
-    QuerySnapshot<Map<dynamic, dynamic>> profile =
-        await connectionString.collection("UserProfiles").get();
-    await connectionString.collection("Leaderboard").get().then((value) {
-      for (var docSnapshot in value.docs) {
-        for (var profileSnapshot in profile.docs) {
-          if (profileSnapshot.data()['UID'] == docSnapshot.data()['UID']) {
-            Leaderboardmodel User = Leaderboardmodel(
-                currentPosition: 1,
-                profileImage: profileSnapshot.data()['profileImage'],
-                points: docSnapshot.data()['Points'],
-                username: profileSnapshot.data()['username']);
-            topthree.add(User);
-            storedpoints.add(docSnapshot.data()['Points']);
-          }
-        }
-      }
+  void updatestate() {
+    emit(LeaderbaordsManagerDone());
+  }
 
-      int LargestPoints = 0;
-      storedpoints.sort((b, a) => a.compareTo(b));
-      int count = 0;
-      for (Leaderboardmodel storeduser in topthree) {
-        if (storeduser.points == storedpoints[count]) {
-          if (count == 0) {
-            storeduser.currentPosition = 1;
-            LargestPoints = storedpoints[count];
-            count++;
-          } else {
-            if (storedpoints[count] <= LargestPoints &&
-                storedpoints[count] > LargestPoints) {
-              LargestPoints = storedpoints[count];
-              storeduser.currentPosition = count;
-              count++;
-            }
-          }
-        }
-        rebuilt.add(storeduser);
-      }
-    });
+  void resetstate() {
+    rebuilt.clear();
+    topthree.clear();
+    getLeaderboard();
     print(rebuilt);
+    emit(LeaderbaordsManagerRefresh());
+    emit(LeaderbaordsManagerDone());
   }
 }
