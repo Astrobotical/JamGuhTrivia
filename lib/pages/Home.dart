@@ -19,7 +19,7 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 // Add your action for Play Easy
               },
-              style: ElevatedButton.styleFrom(primary: Colors.green),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               child: Text('Play Easy', style: TextStyle(fontSize: 40)),
             ),
             SizedBox(height: 200), // Add space between buttons
