@@ -58,5 +58,7 @@
 	<true/>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-7419853902108740~2953097246</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string> Big Chilling </string>
 </dict>
 </plist>

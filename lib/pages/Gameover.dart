@@ -32,7 +32,7 @@ class GameOverPage extends StatelessWidget {
               onPressed: () {
                 main.redirectaftergame();
               },
-              child: Text('Go to Leaderboards'),
+              child: Text('Go to Main Menu'),
             ),
           ],
     ))

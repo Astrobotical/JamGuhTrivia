@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/completesignup_cubit.dart';
 import 'package:jamguh_triva/Statemanagement/cubit/cubit/difficulty_cubit.dart';
+import 'package:jamguh_triva/Statemanagement/cubit/gamestate_cubit.dart';
 import 'package:jamguh_triva/pages/widgets/completeusersignup.dart';
 
 
@@ -10,6 +11,8 @@ class MyHomePageTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final methodobj = context.read<GamestateCubit>();
+    final startobj = context.read<CompletesignupCubit>();
     return Scaffold(body: BlocBuilder<CompletesignupCubit, CompletesignupState>(
         builder: (context, state) {
       if (state is CompletesignupRequest) {
@@ -55,7 +58,19 @@ class MyHomePageTwo extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
-                    difficultyCubit.selectDifficulty(difficultyEvents[index]);
+                    switch(difficultyEvents[index]){
+                      case Difficulty.beginner:
+                        methodobj.setDifficulty('Beginner');
+                        break;
+                      case Difficulty.intermediate:
+                        methodobj.setDifficulty('Intermediate');
+                        break;
+                      case Difficulty.advanced:
+                        methodobj.setDifficulty('Advanced');
+                        break;
+                    }
+                    startobj.StartGame();
+                    //difficultyCubit.selectDifficulty(difficultyEvents[index]);
                   },
                   child: SizedBox(
                     child: Padding(

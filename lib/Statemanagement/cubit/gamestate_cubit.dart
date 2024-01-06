@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jamguh_triva/Models/QuestionsModel.dart';
 import 'package:jamguh_triva/Models/question.dart';
 import 'package:meta/meta.dart';
@@ -15,19 +16,23 @@ class GamestateCubit extends Cubit<GamestateState> {
   int Questionindex = 0;
   int Lister = 1;
   int selectedradio = 0;
-  int total_correct = 4;
+  int total_correct = 0;
   int totalpoints = 0;
-  String gameDifficulty = "Easy";
+  late String gameDifficulty;
 
   Future<List<questions>> getQuestions() async {
-    QuerySnapshot<Map<dynamic, dynamic>> documentobject =
-    await connectionString.collection("Questions").get();
+    QuerySnapshot<Map<dynamic, dynamic>> documentobject = await connectionString
+        .collection("Questions")
+        .where('Level', isEqualTo: gameDifficulty)
+        .get();
     Questions = documentobject.docs
         .map((e) => questions.fromDocumentSnapshot(e))
         .toList();
-    //print(Questions);
-    List<dynamic>yes = [];
-    Questions.add(questions(Imageurl: "Imageurl",
+    print('Gamedifficulty : ${gameDifficulty}');
+    print(Questions);
+    List<dynamic> yes = [];
+    Questions.add(questions(
+        Imageurl: "Imageurl",
         Category: "Category",
         Level: " Level",
         Question: " Question",
@@ -38,10 +43,16 @@ class GamestateCubit extends Cubit<GamestateState> {
         .toList();
   }
 
-  void setRadio(int value) {
+  void setRadio(int value, index) {
+
     selectedradio = value;
     emit(GamestateRadioChanged());
   }
+
+  void pushPage() {
+    emit(Movepage());
+  }
+
   void GeneratePoints() {
     switch (gameDifficulty) {
       case "Easy":
@@ -55,6 +66,7 @@ class GamestateCubit extends Cubit<GamestateState> {
         break;
     }
   }
+
   void pageSkipper() {
     Questionindex += 1;
     if (Questionindex < Questions.length) {
@@ -68,11 +80,10 @@ class GamestateCubit extends Cubit<GamestateState> {
       GeneratePoints();
       SaveData();
       emit(GameOver());
-    } else if (Questionindex == 0) {}
-    else {
-
-    }
+    } else if (Questionindex == 0) {
+    } else {}
   }
+
   Future<void> generateLeaderboardProfile() async {
     Map<String, dynamic> data = {
       'UID': FirebaseAuth.instance.currentUser!.uid,
@@ -81,19 +92,20 @@ class GamestateCubit extends Cubit<GamestateState> {
     FirebaseFirestore.instance
         .collection('Leaderboard')
         .add(data)
-        .then((DocumentReference documentReference) =>
-        print("Leaderboard profile has been generated - ${documentReference
-            .id}"))
+        .then((DocumentReference documentReference) => print(
+            "Leaderboard profile has been generated - ${documentReference.id}"))
         .catchError((error) => print(error));
   }
-  void SaveData()async{
-    if(await LeaderboardProfileChecker()){
+
+  void SaveData() async {
+    if (await LeaderboardProfileChecker()) {
       generateLeaderboardProfile();
       updateLeaderboard();
-    }else{
+    } else {
       updateLeaderboard();
     }
   }
+
   Future<bool> LeaderboardProfileChecker() async {
     bool tobereturned = false;
     QuerySnapshot<Map<String, dynamic>> user = await FirebaseFirestore.instance
@@ -104,6 +116,14 @@ class GamestateCubit extends Cubit<GamestateState> {
       tobereturned = true;
     }
     return tobereturned;
+  }
+
+  void setDifficulty(String Genre) {
+    this.gameDifficulty = Genre;
+  }
+
+  void isCorrect() async {
+    total_correct += 1;
   }
 
   void updateLeaderboard() {
@@ -129,5 +149,20 @@ class GamestateCubit extends Cubit<GamestateState> {
         });
       }
     });
+  }
+
+  bool isuserSubscribed() {
+    FirebaseFirestore.instance
+        .collection('UserProfiles')
+        .where('UID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      for (var document in value.docs) {
+        if (document.data()['issubscribed'] == true) {
+          return true;
+        }
+      }
+    });
+    return false;
   }
 }

@@ -10,3 +10,5 @@ final class CompletesignupError extends CompletesignupState {}
 final class CompletesignupLoading extends CompletesignupState {}
 final class CompletesignupSuccess extends CompletesignupState {}
 final class GameDoneLeaderboardRedirect extends CompletesignupState{}
+final class GameStartRedirect extends CompletesignupState{}
+final class GameRefresh extends CompletesignupState{}

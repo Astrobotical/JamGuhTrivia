@@ -16,7 +16,7 @@ class gamelayout extends StatefulWidget {
 
 class _gamelayoutState extends State<gamelayout> {
   late FToast fToast;
-
+  late String Selectedvalue;
   @override
   void initState() {
     super.initState();
@@ -28,42 +28,25 @@ class _gamelayoutState extends State<gamelayout> {
   @override
   Widget build(BuildContext context) {
     final statefulcontext = context.read<GamestateCubit>();
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(25),
-          child: Image.network(
-            widget.Data.Imageurl,
-            width: MediaQuery.sizeOf(context).width,
-            height:200,
-          ),
+    return Column(children: [
+      Container(
+        margin: const EdgeInsets.all(25),
+        child: Image.network(
+          widget.Data.Imageurl,
+          width: MediaQuery.sizeOf(context).width,
+          height: 200,
         ),
-        Gap(30),
-        FittedBox(
-          fit: BoxFit.fitWidth,
-        child:
-        Text(
+      ),
+      Gap(30),
+      FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Text(
           widget.Data.Question,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
-    ),
-        BlocBuilder<GamestateCubit, GamestateState>(builder: (context, state) {
-          if (state is GamestateRadioChanged) {
-            return SizedBox(
-                height: 350,
-                child: ListView.builder(
-                    itemCount: widget.Data.Responses.length,
-                    itemBuilder: (context, index) {
-                      return QuestionRadio(
-                          text: widget.Data.Responses[index],
-                          index: index,
-                          selectedButton: statefulcontext.selectedradio,
-                          press: (selectedvalue) {
-                            debugPrint('Radio button changed is here $selectedvalue');
-                            statefulcontext.setRadio(selectedvalue);
-                          });
-                    }));
-          }
+      ),
+      BlocBuilder<GamestateCubit, GamestateState>(builder: (context, state) {
+        if (state is GamestateRadioChanged) {
           return SizedBox(
               height: 350,
               child: ListView.builder(
@@ -73,39 +56,62 @@ class _gamelayoutState extends State<gamelayout> {
                         text: widget.Data.Responses[index],
                         index: index,
                         selectedButton: statefulcontext.selectedradio,
-                        press: (selectedvalue)async {
-                          debugPrint('Radio button is here $selectedvalue');
-                          statefulcontext.setRadio(selectedvalue);
+                        press: (selectedvalue) {
+                          setState(() {
+                            Selectedvalue =
+                                widget.Data.Responses[selectedvalue];
+                            debugPrint(widget.Data.Responses[selectedvalue]);
+                          });
+                          debugPrint(
+                              'Radio button changed is here $selectedvalue');
+                          statefulcontext.setRadio(selectedvalue,index);
                         });
                   }));
-        }),
-        Container(
-    width: double.infinity,
-    child:
-        Stack(
-    children:[
-      Align(
-        alignment: Alignment.bottomCenter,
-        child:Text('${statefulcontext.Lister}/${statefulcontext.Questions.length-1}',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)
+        }
+        return SizedBox(
+            height: 350,
+            child: ListView.builder(
+                itemCount: widget.Data.Responses.length,
+                itemBuilder: (context, index) {
+                  return QuestionRadio(
+                      text: widget.Data.Responses[index],
+                      index: index,
+                      selectedButton: statefulcontext.selectedradio,
+                      press: (selectedvalue) async {
+                        setState(() {
+                          Selectedvalue = widget.Data.Responses[selectedvalue];
+                        });
+                        debugPrint('Radio button is here $selectedvalue');
+                        statefulcontext.setRadio(selectedvalue, index);
+                      });
+                }));
+      }),
+      Container(
+        width: double.infinity,
+        child: Stack(children: [
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                '${statefulcontext.Lister}/${statefulcontext.Questions.length - 1}',
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              )),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: InkWell(
+                onTap: () {
+                  if (Selectedvalue == widget.Data.Answer) {
+                    statefulcontext.isCorrect();
+                  }
+                  statefulcontext.pageSkipper();
+                },
+                child: Icon(
+                  Icons.arrow_circle_right_outlined,
+                  size: 80,
+                  weight: 16,
+                ),
+              ))
+        ]),
       ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child:
-          InkWell(
-            onTap: (){
-              statefulcontext.pageSkipper();
-            },
-            child:
-          Icon(
-            Icons.arrow_circle_right_outlined,
-            size: 80,
-            weight: 16,
-          ),
-        )
-        )
-        ]
-    ),
-        ),
     ]);
   }
 

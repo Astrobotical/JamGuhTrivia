@@ -57,8 +57,11 @@ class CompletesignupCubit extends Cubit<CompletesignupState> {
         }
       });
     }
-  }
 
+  }
+  void StartGame(){
+    emit(GameStartRedirect());
+  }
   Future<bool> usernamechecker(String username) async {
     bool tobereturned = false;
     QuerySnapshot<Map<String, dynamic>> user = await FirebaseFirestore.instance
@@ -72,5 +75,6 @@ class CompletesignupCubit extends Cubit<CompletesignupState> {
   }
   void redirectaftergame(){
     emit(GameDoneLeaderboardRedirect());
+    emit(GameRefresh());
   }
 }
